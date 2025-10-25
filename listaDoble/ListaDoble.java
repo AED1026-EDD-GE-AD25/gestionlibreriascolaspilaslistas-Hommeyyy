@@ -1,6 +1,6 @@
 package listaDoble;
 public class ListaDoble<T>{
-    //atributoss
+    //atributosss
     private Nodo<T>cabeza;
     private int tamanio;
     //constructor por defecto
