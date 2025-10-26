@@ -1,4 +1,5 @@
 package listaDoble;
+
 public class ListaDoble<T>{
     //atributos
     private Nodo<T>cabeza;
@@ -90,28 +91,45 @@ public class ListaDoble<T>{
      */
 
     public T remover(int pos) throws PosicionIlegalException{
-        
-        
+        if(pos>=0 && pos<tamanio){
+            T eliminado;
+            if(pos==0){ //eliminar cabeza
+                eliminado = cabeza.getValor();
+                cabeza = cabeza.getSiguiente();
+            }else{ //buscar el nodo anterior
+                Nodo<T> aux = cabeza;
+                for(int i=0;i<=pos-2;i++){
+                    aux = aux.getSiguiente();
+                }
+                Nodo<T> prox = aux.getSiguiente();
+                eliminado = prox.getValor();
+                aux.setSiguiente(prox.getSiguiente());
+            }
+            tamanio--;
+            return eliminado;
+        }else{
+            throw new PosicionIlegalException();
+        }
     }
-     /*
-     * Elimina un nodo que contiene un T valor
-     * @param T: valor a eliminar
-     * @return: si lo encuentra retorna la posicion a eliminar,si no retorna -1
-     * @throws PosicionIlegalException
-     */
-
-    
      /*
       * Elimina un nodo de la lista buscandolo por su
         valor, si lo encuentra retorna la posición y lo 
         elimina,si no lo encuentra retorna -1
-    
-
       */
      public int remover(T valor) throws PosicionIlegalException{
-        
-       
-        
+         Nodo<T> aux = cabeza;
+         int pos = 0;
+
+         while(aux != null){
+            if(aux.getValor().equals(valor)){
+                remover(pos);
+                return pos;
+            }
+            aux = aux.getSiguiente();
+            pos++;
+         }
+
+         return -1; //no encontrado
     }
 
     /*
@@ -153,8 +171,13 @@ public class ListaDoble<T>{
 
     @Override
     public String toString() {
-       
-
+       String cad = "";
+       Nodo<T> aux = cabeza;
+       while(aux != null){
+        cad += aux.getValor() + " ";
+        aux = aux.getSiguiente();
+       }
+       return cad;
     }
     /*
      * busca un valor en la lista
@@ -162,7 +185,14 @@ public class ListaDoble<T>{
      * si no regresa false
      */
     public boolean contiene(T valor){
-        
+        Nodo<T> aux = cabeza;
+        while(aux != null){
+            if(aux.getValor().equals(valor)){
+                return true;
+            }
+            aux = aux.getSiguiente();
+        }
+        return false;
     }
     
     
