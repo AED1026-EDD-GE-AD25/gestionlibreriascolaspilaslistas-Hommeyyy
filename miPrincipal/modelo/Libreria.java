@@ -24,59 +24,56 @@ public class Libreria{
 
     }
 
-    public void agregarLibro(){
-        
+    public void agregarLibro(Libro libro){
+          listaLibros.agregar(libro);
            
         
     }
 
-    public void obtenerLibros(){
-       
-
+     public ListaDoble<Libro> obtenerLibros() {
+        return listaLibros;
     }
 
-    public void agregarLibroCola(){
-
-        
-
+      public boolean agregarLibroCola(Libro libro) {
+        colaLibros.encolar(libro);
+        return true;
+    }
+    public Libro obtenerLibroCola() {
+        return colaLibros.desencolar();
+    }
+    public Libro obtenerLibroPila() {
+        return pilaLibrosEliminados.cima();
     }
 
-    public void obtenerLibroCola(){
-
-       
-        
-
-    }
-    public voic obtenerLibroPila(){
-        
-
-
+     public Libro crearLibro(String titulo, String autor, String isbn) {
+        return new Libro(titulo, autor, isbn);
     }
 
-    public void crearLibro(){
-        
+     public Pedido crearPedido(Libro libro, Fecha fecha) {
+        return new Pedido(libro, fecha);
     }
 
-    public void crearPedido(){
-        
-
+    public boolean devolverLibro(Libro libro) throws PosicionIlegalException {
+        int pos = listaLibros.remover(libro);
+        return pos != -1;
     }
 
-    public void devolverLibro() {
-       
-
+    public Libro eliminarUltimoLibro() throws PosicionIlegalException {
+        int ultimaPos = listaLibros.getTamanio() - 1;
+        Libro libroEliminado = listaLibros.getValor(ultimaPos);
+        listaLibros.remover(ultimaPos);
+        pilaLibrosEliminados.apilar(libroEliminado);
+        return libroEliminado;
     }
-
-    public void eliminarUltimoLibro(){
-        
-
+     public Libro deshacerEliminarLibro() throws PosicionIlegalException {
+        if (pilaLibrosEliminados.esVacia()) {
+            return null; 
+        }
+        Libro libroRecuperado = pilaLibrosEliminados.cima();
+        pilaLibrosEliminados.retirar();
+        listaLibros.agregar(libroRecuperado);
+        return libroRecuperado;
     }
-
-    public void deshacerEliminarLibro(){
-        
-
-    }
-
     public void buscarLibro(String isbn) {
 
         
