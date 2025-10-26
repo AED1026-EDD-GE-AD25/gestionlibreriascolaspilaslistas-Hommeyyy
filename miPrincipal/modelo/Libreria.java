@@ -75,10 +75,26 @@ public class Libreria{
         return libroRecuperado;
     }
     public void buscarLibro(String isbn) {
-
-        
-
+    boolean encontrado = false;
+    
+    for (int i = 0; i < listaLibros.getTamanio(); i++) {
+        try {
+            Libro libro = listaLibros.getValor(i);
+            if (libro != null && libro.getIsbn() != null && libro.getIsbn().equals(isbn)) {
+                
+                System.out.println("Libro encontrado en la posición " + i + ": " + libro);
+                encontrado = true;
+                break;
+            }
+        } catch (PosicionIlegalException e) {
+            
+            System.err.println("Error al acceder la posición " + i + ": " + e.getMessage());
+        }
     }
+    if (!encontrado) {
+        System.out.println("No se encontró ningún libro con ISBN: " + isbn);
+    }
+}
 
 
 }
