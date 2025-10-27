@@ -1,4 +1,4 @@
-package listaDoble;
+package cola;
 
 public class Cola<T> {
 
