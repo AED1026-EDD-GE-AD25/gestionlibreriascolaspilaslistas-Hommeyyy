@@ -15,7 +15,7 @@ public class Libreria {
     Pila<Libro> pilaLibrosEliminados;
     Scanner scanner; 
 
-    public Libreria(){
+    public Libreria() {
         dataService = new ServicioDatos();
         scanner = new Scanner(System.in);
         listaLibros = new ListaDoble<>();
@@ -23,8 +23,8 @@ public class Libreria {
         pilaLibrosEliminados = new Pila<>();
     }
 
-    public void agregarLibro(Libro libro){
-        listaLibros.agregar(libro);
+    public void agregarLibro(Libro libro) {
+        listaLibros.agregar(libro); 
     }
 
     public ListaDoble<Libro> obtenerLibros() {
@@ -37,11 +37,11 @@ public class Libreria {
     }
 
     public Libro obtenerLibroCola() {
-        return colaLibros.desencolar();
+        return colaLibros.desencolar(); 
     }
 
     public Libro obtenerLibroPila() {
-        return pilaLibrosEliminados.cima();
+        return pilaLibrosEliminados.cima(); 
     }
 
     public Libro crearLibro(String titulo, String autor, String isbn) {
@@ -54,12 +54,11 @@ public class Libreria {
 
     public boolean devolverLibro(Libro libro) throws PosicionIlegalException {
         int pos = listaLibros.remover(libro);
-        return pos != -1;
+        return pos != -1; 
     }
 
     public Libro eliminarUltimoLibro() throws PosicionIlegalException {
         int ultimaPos = listaLibros.getTamanio() - 1;
-        if (ultimaPos < 0) return null;
         Libro libroEliminado = listaLibros.getValor(ultimaPos);
         listaLibros.remover(ultimaPos);
         pilaLibrosEliminados.apilar(libroEliminado);
@@ -67,28 +66,22 @@ public class Libreria {
     }
 
     public Libro deshacerEliminarLibro() throws PosicionIlegalException {
-        if (pilaLibrosEliminados.esVacia()) return null;
-        Libro libroRecuperado = pilaLibrosEliminados.retirar(); // usar retirar que devuelve el elemento
+        if (pilaLibrosEliminados.esVacia()) {
+            return null;
+        }
+        Libro libroRecuperado = pilaLibrosEliminados.cima();
+        pilaLibrosEliminados.retirar();
         listaLibros.agregar(libroRecuperado);
         return libroRecuperado;
     }
 
-    public void buscarLibro(String isbn) {
-        boolean encontrado = false;
+    public Libro buscarLibro(String isbn) throws PosicionIlegalException {
         for (int i = 0; i < listaLibros.getTamanio(); i++) {
-            try {
-                Libro libro = listaLibros.getValor(i);
-                if (libro != null && libro.getIsbn() != null && libro.getIsbn().equals(isbn)) {
-                    System.out.println("Libro encontrado en la posición " + i + ": " + libro);
-                    encontrado = true;
-                    break;
-                }
-            } catch (PosicionIlegalException e) {
-                System.err.println("Error al acceder la posición " + i + ": " + e.getMessage());
+            Libro libro = listaLibros.getValor(i);
+            if (libro != null && isbn.equals(libro.getIsbn())) {
+                return libro;
             }
         }
-        if (!encontrado) {
-            System.out.println("No se encontró ningún libro con ISBN: " + isbn);
-        }
+        return null;
     }
 }
