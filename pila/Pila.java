@@ -10,12 +10,10 @@ public class Pila<T> {
         tamanio = 0;
     }
 
-    
     public boolean esVacia(){
         return cima == null;
     }
 
-    
     public void apilar(T valor){
         Nodo<T> nuevo = new Nodo<>();
         nuevo.setValor(valor);
@@ -29,15 +27,17 @@ public class Pila<T> {
         tamanio++;
     }
 
-   
-    public void retirar(){
+    // Ahora retirar devuelve el elemento eliminado
+    public T retirar(){
         if(!esVacia()){
+            T valor = cima.getValor();
             cima = cima.getSiguiente();
             tamanio--;
+            return valor;
         }
+        return null;
     }
 
-    
     public T cima(){
         if(!esVacia()){
             return cima.getValor();

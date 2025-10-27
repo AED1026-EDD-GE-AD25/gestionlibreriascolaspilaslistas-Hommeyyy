@@ -59,6 +59,7 @@ public class Libreria {
 
     public Libro eliminarUltimoLibro() throws PosicionIlegalException {
         int ultimaPos = listaLibros.getTamanio() - 1;
+        if (ultimaPos < 0) return null;
         Libro libroEliminado = listaLibros.getValor(ultimaPos);
         listaLibros.remover(ultimaPos);
         pilaLibrosEliminados.apilar(libroEliminado);
@@ -66,11 +67,8 @@ public class Libreria {
     }
 
     public Libro deshacerEliminarLibro() throws PosicionIlegalException {
-        if (pilaLibrosEliminados.esVacia()) {
-            return null; 
-        }
-        Libro libroRecuperado = pilaLibrosEliminados.cima();
-        pilaLibrosEliminados.retirar();
+        if (pilaLibrosEliminados.esVacia()) return null;
+        Libro libroRecuperado = pilaLibrosEliminados.retirar(); // usar retirar que devuelve el elemento
         listaLibros.agregar(libroRecuperado);
         return libroRecuperado;
     }
