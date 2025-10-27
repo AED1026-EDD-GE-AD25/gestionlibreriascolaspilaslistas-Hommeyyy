@@ -27,7 +27,6 @@ public class Libreria{
     public void agregarLibro(Libro libro){
           listaLibros.agregar(libro);
            
-        
     }
 
      public ListaDoble<Libro> obtenerLibros() {
@@ -38,9 +37,12 @@ public class Libreria{
         colaLibros.encolar(libro);
         return true;
     }
+
+    
     public Libro obtenerLibroCola() {
-        return colaLibros.desencolar();
+        return colaLibros.frente();
     }
+
     public Libro obtenerLibroPila() {
         return pilaLibrosEliminados.cima();
     }
@@ -65,6 +67,7 @@ public class Libreria{
         pilaLibrosEliminados.apilar(libroEliminado);
         return libroEliminado;
     }
+
      public Libro deshacerEliminarLibro() throws PosicionIlegalException {
         if (pilaLibrosEliminados.esVacia()) {
             return null; 
@@ -74,27 +77,24 @@ public class Libreria{
         listaLibros.agregar(libroRecuperado);
         return libroRecuperado;
     }
+
     public void buscarLibro(String isbn) {
-    boolean encontrado = false;
-    
-    for (int i = 0; i < listaLibros.getTamanio(); i++) {
-        try {
-            Libro libro = listaLibros.getValor(i);
-            if (libro != null && libro.getIsbn() != null && libro.getIsbn().equals(isbn)) {
-                
-                System.out.println("Libro encontrado en la posición " + i + ": " + libro);
-                encontrado = true;
-                break;
+        boolean encontrado = false;
+        
+        for (int i = 0; i < listaLibros.getTamanio(); i++) {
+            try {
+                Libro libro = listaLibros.getValor(i);
+                if (libro != null && libro.getIsbn() != null && libro.getIsbn().equals(isbn)) {
+                    System.out.println("Libro encontrado en la posición " + i + ": " + libro);
+                    encontrado = true;
+                    break;
+                }
+            } catch (PosicionIlegalException e) {
+                System.err.println("Error al acceder la posición " + i + ": " + e.getMessage());
             }
-        } catch (PosicionIlegalException e) {
-            
-            System.err.println("Error al acceder la posición " + i + ": " + e.getMessage());
+        }
+        if (!encontrado) {
+            System.out.println("No se encontró ningún libro con ISBN: " + isbn);
         }
     }
-    if (!encontrado) {
-        System.out.println("No se encontró ningún libro con ISBN: " + isbn);
-    }
-}
-
-
 }
