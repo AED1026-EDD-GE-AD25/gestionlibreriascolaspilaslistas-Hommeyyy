@@ -8,7 +8,7 @@ import utilerias.Fecha;
 import miPrincipal.servicio.ServicioDatos;
 import java.util.Scanner;
 
-public class Libreria{
+public class Libreria {
     ServicioDatos dataService;
     ListaDoble<Libro> listaLibros;
     Cola<Libro> colaLibros;
@@ -21,37 +21,34 @@ public class Libreria{
         listaLibros = new ListaDoble<>();
         colaLibros = new Cola<>();
         pilaLibrosEliminados = new Pila<>();
-
     }
 
     public void agregarLibro(Libro libro){
-          listaLibros.agregar(libro);
-           
+        listaLibros.agregar(libro);
     }
 
-     public ListaDoble<Libro> obtenerLibros() {
+    public ListaDoble<Libro> obtenerLibros() {
         return listaLibros;
     }
 
-      public boolean agregarLibroCola(Libro libro) {
+    public boolean agregarLibroCola(Libro libro) {
         colaLibros.encolar(libro);
         return true;
     }
 
-    
     public Libro obtenerLibroCola() {
-        return colaLibros.frente();
+        return colaLibros.desencolar();
     }
 
     public Libro obtenerLibroPila() {
         return pilaLibrosEliminados.cima();
     }
 
-     public Libro crearLibro(String titulo, String autor, String isbn) {
+    public Libro crearLibro(String titulo, String autor, String isbn) {
         return new Libro(titulo, autor, isbn);
     }
 
-     public Pedido crearPedido(Libro libro, Fecha fecha) {
+    public Pedido crearPedido(Libro libro, Fecha fecha) {
         return new Pedido(libro, fecha);
     }
 
@@ -68,7 +65,7 @@ public class Libreria{
         return libroEliminado;
     }
 
-     public Libro deshacerEliminarLibro() throws PosicionIlegalException {
+    public Libro deshacerEliminarLibro() throws PosicionIlegalException {
         if (pilaLibrosEliminados.esVacia()) {
             return null; 
         }
@@ -80,7 +77,6 @@ public class Libreria{
 
     public void buscarLibro(String isbn) {
         boolean encontrado = false;
-        
         for (int i = 0; i < listaLibros.getTamanio(); i++) {
             try {
                 Libro libro = listaLibros.getValor(i);

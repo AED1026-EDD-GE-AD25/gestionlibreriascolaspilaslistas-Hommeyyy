@@ -7,7 +7,7 @@ package listaDoble;
  */
 public class ListaDoble<T> {
 
-    // Atributos
+    //  Atributos
     private Nodo<T> cabeza; // Primer nodo de la lista
     private int tamanio;    // Cantidad de elementos en la lista
 
@@ -17,12 +17,12 @@ public class ListaDoble<T> {
         tamanio = 0;
     }
 
-    //  Getter para tamaño
+    // Getter para tamaño
     public int getTamanio() {
         return tamanio;
     }
 
-    //  Verifica si la lista está vacía
+    // Verifica si la lista está vacía
     public boolean esVacia() {
         return cabeza == null;
     }
@@ -132,17 +132,13 @@ public class ListaDoble<T> {
      * Si lo encuentra, retorna la posición y lo elimina.
      * Si no lo encuentra, retorna -1.
      */
-    public int remover(T valor) {
+    public int remover(T valor) throws PosicionIlegalException {
         Nodo<T> aux = cabeza;
         int pos = 0;
 
         while (aux != null) {
             if (aux.getValor().equals(valor)) {
-                try {
-                    remover(pos);
-                } catch (PosicionIlegalException e) {
-                    return -1;
-                }
+                remover(pos);
                 return pos;
             }
             aux = aux.getSiguiente();
@@ -185,7 +181,7 @@ public class ListaDoble<T> {
     public boolean contiene(T valor) {
         Nodo<T> aux = cabeza;
         while (aux != null) {
-            if (aux.getValor().equals(valor)) {
+            if (aux.getValor() == valor || aux.getValor().equals(valor)) {
                 return true;
             }
             aux = aux.getSiguiente();
