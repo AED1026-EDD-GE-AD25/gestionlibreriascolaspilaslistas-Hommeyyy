@@ -1,5 +1,5 @@
 package pila;
-
+import listaDoble.Nodo;
 public class Pila<T> {
     private Nodo<T> cima; 
     private int tamanio;

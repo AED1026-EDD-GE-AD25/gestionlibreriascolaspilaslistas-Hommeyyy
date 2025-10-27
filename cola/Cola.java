@@ -1,5 +1,5 @@
 package cola;
-
+import listaDoble.Nodo;
 public class Cola<T> {
 
     private Nodo<T> cabeza; 
