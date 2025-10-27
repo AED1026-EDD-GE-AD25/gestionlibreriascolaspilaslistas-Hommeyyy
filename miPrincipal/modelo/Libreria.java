@@ -8,80 +8,80 @@ import utilerias.Fecha;
 import miPrincipal.servicio.ServicioDatos;
 import java.util.Scanner;
 
-public class Libreria{
+public class Libreria {
     ServicioDatos dataService;
     ListaDoble<Libro> listaLibros;
     Cola<Libro> colaLibros;
     Pila<Libro> pilaLibrosEliminados;
     Scanner scanner; 
 
-    public Libreria(){
+    public Libreria() {
         dataService = new ServicioDatos();
         scanner = new Scanner(System.in);
         listaLibros = new ListaDoble<>();
         colaLibros = new Cola<>();
         pilaLibrosEliminados = new Pila<>();
-
     }
 
-    public void agregarLibro(){
-        
-           
-        
+    public void agregarLibro(Libro libro) {
+        listaLibros.agregar(libro); 
     }
 
-    public void obtenerLibros(){
-       
-
+    public ListaDoble<Libro> obtenerLibros() {
+        return listaLibros;
     }
 
-    public void agregarLibroCola(){
-
-        
-
+    public boolean agregarLibroCola(Libro libro) {
+        colaLibros.encolar(libro);
+        return true;
     }
 
-    public void obtenerLibroCola(){
-
-       
-        
-
-    }
-    public voic obtenerLibroPila(){
-        
-
-
+    public Libro obtenerLibroCola() {
+        return colaLibros.desencolar(); 
     }
 
-    public void crearLibro(){
-        
+    public Libro obtenerLibroPila() {
+        return pilaLibrosEliminados.cima(); 
     }
 
-    public void crearPedido(){
-        
-
+    public Libro crearLibro(String titulo, String autor, String isbn) {
+        return new Libro(titulo, autor, isbn);
     }
 
-    public void devolverLibro() {
-       
-
+    public Pedido crearPedido(Libro libro, Fecha fecha) {
+        return new Pedido(libro, fecha);
     }
 
-    public void eliminarUltimoLibro(){
-        
-
+    public boolean devolverLibro(Libro libro) throws PosicionIlegalException {
+        int pos = listaLibros.remover(libro);
+        return pos != -1; 
     }
 
-    public void deshacerEliminarLibro(){
-        
-
+    public Libro eliminarUltimoLibro() throws PosicionIlegalException {
+        int ultimaPos = listaLibros.getTamanio() - 1;
+        Libro libroEliminado = listaLibros.getValor(ultimaPos);
+        listaLibros.remover(ultimaPos);
+        pilaLibrosEliminados.apilar(libroEliminado);
+        return libroEliminado;
     }
 
-    public void buscarLibro(String isbn) {
-
-        
-
+    public Libro deshacerEliminarLibro() throws PosicionIlegalException {
+        if (pilaLibrosEliminados.esVacia()) {
+            return null;
+        }
+        Libro libroRecuperado = pilaLibrosEliminados.cima();
+        pilaLibrosEliminados.retirar();
+        listaLibros.agregar(libroRecuperado);
+        return libroRecuperado;
     }
 
-
+    public Libro buscarLibro(String isbn) throws PosicionIlegalException {
+        for (int i = 0; i < listaLibros.getTamanio(); i++) {
+            Libro libro = listaLibros.getValor(i);
+            if (libro != null && isbn.equals(libro.getIsbn())) {
+                return libro;
+            }
+        }
+        return null;
+    }
 }
